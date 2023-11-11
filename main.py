@@ -24,6 +24,7 @@ def normalize(name):
     new_name = name.lower().strip()
     return new_name
 
+
 @input_error
 def add(name_and_phone):
     split_value = name_and_phone.split()
