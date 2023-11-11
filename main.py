@@ -75,15 +75,15 @@ while True:
     user_input = normalize(input(">>>"))
     if user_input == "hello" or user_input == "hi":
         hello()
-    if "add" in user_input:
+    elif "add" in user_input:
         add(user_input)
-    if "change" in user_input:
+    elif "change" in user_input:
         change(user_input)
-    if "phone" in user_input:
+    elif "phone" in user_input:
         phone(user_input)
-    if "show all" in user_input:
+    elif "show all" in user_input:
         show_all()
-    if exit_bot(user_input):
+    elif exit_bot(user_input):
         break
     else:
         print("Pls enter: 'add', 'change', 'phone', 'show all' or 'exit'")
