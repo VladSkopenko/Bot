@@ -13,7 +13,7 @@ def input_error(func):
     return inner
 
 
-users = {}
+USERS = {}
 
 
 def hello():
@@ -30,8 +30,8 @@ def add(name_and_phone):
     if len(split_value) == 3:
         name = split_value[1]
         phone_number = split_value[2]
-        if name.lower() not in users.keys():
-            users[name] = phone_number
+        if name.lower() not in USERS.keys():
+            USERS[name] = phone_number
         else:
             print(f"Contact with name:{name}  already exists")
     else:
@@ -43,8 +43,8 @@ def change(name_and_phone):
     if len(split_val) == 3:
         name = split_val[1].lower()
         phone_numb = split_val[2]
-        if name in users.keys():
-            users[name] = phone_numb
+        if name in USERS.keys():
+            USERS[name] = phone_numb
         else:
             print(f"{name} is not found")
     else:
@@ -56,12 +56,12 @@ def phone(name_cont):
     if len(split_value) != 2:
         raise IndexError
     name = split_value[1].lower()
-    return print(users[name])
+    return print(USERS[name])
 
 
 def show_all():
-    if len(users) > 0:
-        for key, value in users.items():
+    if len(USERS) > 0:
+        for key, value in USERS.items():
             print(f"{key.capitalize()}: {value}")
     else:
         return print("You have no saved contacts")
