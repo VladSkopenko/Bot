@@ -4,11 +4,11 @@ def input_error(func):
             result = func(*args, **kwargs)
             return result
         except KeyError:
-            print(f"Enter user name, pls")
+            print("Enter user name please")
         except ValueError:
-            print("Give me name and phone please")
+            print("Enter a correct phone number")
         except IndexError:
-            print("Index")
+            print("Give me name and phone please")
 
     return inner
 
@@ -25,7 +25,6 @@ def normalize(name):
     return new_name
 
 
-@input_error
 def add(name_and_phone):
     split_value = name_and_phone.split()
     if len(split_value) == 3:
@@ -34,23 +33,28 @@ def add(name_and_phone):
         if name.lower() not in users.keys():
             users[name] = phone_number
         else:
-            print(f"Контакт с именем:{name} уже существует")
+            print(f"Contact with name:{name}  already exists")
+    else:
+        raise ValueError
 
 
 def change(name_and_phone):
     split_val = name_and_phone.split()
     if len(split_val) == 3:
-        name = split_val[1]
+        name = split_val[1].lower()
         phone_numb = split_val[2]
-        if name.lower() in users.keys():
+        if name in users.keys():
             users[name] = phone_numb
         else:
-            print(f"Контакт с именем:{name} не существует")
+            print(f"{name} is not found")
+    else:
+        raise ValueError
 
 
-@input_error
 def phone(name_cont):
     split_value = name_cont.split()
+    if len(split_value) != 2:
+        raise IndexError
     name = split_value[1].lower()
     return print(users[name])
 
@@ -58,7 +62,7 @@ def phone(name_cont):
 def show_all():
     if len(users) > 0:
         for key, value in users.items():
-            print(f"{key.capitalize()}: {value.capitalize()}")
+            print(f"{key.capitalize()}: {value}")
     else:
         return print("You have no saved contacts")
 
@@ -71,19 +75,27 @@ def exit_bot(command):
         return False
 
 
-while True:
-    user_input = normalize(input(">>>"))
-    if user_input == "hello" or user_input == "hi":
+@input_error
+def main(inputse):
+    res = inputse.split()
+    command = res[0]
+    if command == "hello":
         hello()
-    elif "add" in user_input:
-        add(user_input)
-    elif "change" in user_input:
-        change(user_input)
-    elif "phone" in user_input:
-        phone(user_input)
-    elif "show all" in user_input:
+    elif command == "add":
+        add(inputse)
+    elif command == "change":
+        change(inputse)
+    elif command == "phone":
+        phone(inputse)
+    elif inputse == "show all":
         show_all()
-    elif exit_bot(user_input):
+    else:
+        print("Unknown command. Type 'hello' for assistance.")
+
+
+while True:
+    user_input = normalize(input("Enter command>>>"))
+    if exit_bot(user_input):
         break
     else:
-        print("Pls enter: 'add', 'change', 'phone', 'show all' or 'exit'")
+        main(user_input)
